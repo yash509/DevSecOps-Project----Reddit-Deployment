@@ -1,6 +1,5 @@
 import React, { Ref } from "react";
 import { Flex, Stack, Button, Image } from "@chakra-ui/react";
-
 type ImageUploadProps = {
   selectedFile?: string;
   setSelectedFile: (value: string) => void;
@@ -8,7 +7,6 @@ type ImageUploadProps = {
   selectFileRef: React.RefObject<HTMLInputElement>;
   onSelectImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
-
 const ImageUpload: React.FC<ImageUploadProps> = ({
   selectedFile,
   setSelectedFile,
