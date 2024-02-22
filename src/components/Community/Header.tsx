@@ -4,22 +4,15 @@ import { FaReddit } from "react-icons/fa";
 import { Community, communityState } from "../../atoms/communitiesAtom";
 import useCommunityData from "../../hooks/useCommunityData";
 import { useSetRecoilState } from "recoil";
-
 type HeaderProps = {
   communityData: Community;
 };
-
 const Header: React.FC<HeaderProps> = ({ communityData }) => {
-  /**
-   * !!!Don't pass communityData boolean until the end
-   * It's a small optimization!!!
-   */
   const { communityStateValue, loading, error, onJoinLeaveCommunity } =
     useCommunityData(!!communityData);
   const isJoined = !!communityStateValue.mySnippets.find(
     (item) => item.communityId === communityData.id
   );
-
   return (
     <Flex direction="column" width="100%" height="146px">
       <Box height="50%" bg="blue.400" />
