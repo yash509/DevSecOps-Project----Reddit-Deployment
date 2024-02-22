@@ -17,9 +17,7 @@ import AuthInputs from "./Inputs";
 import OAuthButtons from "./OAuthButtons";
 import ResetPassword from "./ResetPassword";
 import ModalWrapper from "../ModalWrapper";
-
 type AuthModalProps = {};
-
 const AuthModal: React.FC<AuthModalProps> = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
   const handleClose = () =>
@@ -27,25 +25,17 @@ const AuthModal: React.FC<AuthModalProps> = () => {
       ...prev,
       open: false,
     }));
-
   const currentUser = useRecoilValue(userState);
   const [user, error] = useAuthState(auth);
-
-  // Can implement at the end
-  // useEffect(() => {
-  //   if (currentUser) handleClose();
-  // }, [currentUser]);
   const toggleView = (view: string) => {
     setModalState({
       ...modalState,
       view: view as typeof modalState.view,
     });
   };
-
   useEffect(() => {
     if (user) handleClose();
   }, [user]);
-
   return (
     <ModalWrapper isOpen={modalState.open} onClose={handleClose}>
       <ModalHeader display="flex" flexDirection="column" alignItems="center">
@@ -76,25 +66,8 @@ const AuthModal: React.FC<AuthModalProps> = () => {
           ) : (
             <ResetPassword toggleView={toggleView} />
           )}
-          {/* // Will implement at end of tutorial */}
-          {/* {user && !currentUser && (
-                <>
-                  <Spinner size="lg" mt={2} mb={2} />
-                  <Text fontSize="8pt" textAlign="center" color="blue.500">
-                    You are logged in. You will be redirected soon
-                  </Text>
-                </>
-              )} */}
-          {/* {false ? (
-                <Flex
-                  direction="column"
-                  justifyContent="center"
-                  alignItems="center"
-                  height="100%"
-                >
-                </Flex>
-              ) : (
-              )} */}
+          {}
+          {}
         </Flex>
       </ModalBody>
     </ModalWrapper>
