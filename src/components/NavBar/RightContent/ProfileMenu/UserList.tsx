@@ -6,17 +6,13 @@ import { MdOutlineLogin } from "react-icons/md";
 import { useResetRecoilState } from "recoil";
 import { communityState } from "../../../../atoms/communitiesAtom";
 import { auth } from "../../../../firebase/clientApp";
-
 type UserListProps = {};
-
 const UserList: React.FC<UserListProps> = () => {
   const resetCommunityState = useResetRecoilState(communityState);
-
   const logout = async () => {
     await signOut(auth);
     resetCommunityState();
   };
-
   return (
     <>
       <MenuItem
