@@ -9,9 +9,7 @@ import {
   IoVideocamOutline,
 } from "react-icons/io5";
 import useDirectory from "../../../hooks/useDirectory";
-
 type ActionIconsProps = {};
-
 const ActionIcons: React.FC<ActionIconsProps> = () => {
   const { toggleMenuOpen } = useDirectory();
   return (
