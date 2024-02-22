@@ -23,7 +23,6 @@ import {
 } from "react-icons/io5";
 import { Post } from "../../../atoms/postsAtom";
 import Link from "next/link";
-
 export type PostItemContentProps = {
   post: Post;
   onVote: (
@@ -41,7 +40,6 @@ export type PostItemContentProps = {
   userVoteValue?: number;
   homePage?: boolean;
 };
-
 const PostItem: React.FC<PostItemContentProps> = ({
   post,
   postIdx,
@@ -65,22 +63,13 @@ const PostItem: React.FC<PostItemContentProps> = ({
     try {
       const success = await onDeletePost(post);
       if (!success) throw new Error("Failed to delete post");
-
       console.log("Post successfully deleted");
-
-      // Could proably move this logic to onDeletePost function
       if (router) router.back();
     } catch (error: any) {
       console.log("Error deleting post", error.message);
-      /**
-       * Don't need to setLoading false if no error
-       * as item will be removed from DOM
-       */
       setLoadingDelete(false);
-      // setError
     }
   };
-
   return (
     <Flex
       border="1px solid"
@@ -231,5 +220,4 @@ const PostItem: React.FC<PostItemContentProps> = ({
     </Flex>
   );
 };
-
 export default PostItem;
