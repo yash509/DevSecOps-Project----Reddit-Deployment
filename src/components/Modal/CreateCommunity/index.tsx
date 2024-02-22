@@ -22,13 +22,11 @@ import { useSetRecoilState } from "recoil";
 import { communityState } from "../../../atoms/communitiesAtom";
 import { firestore } from "../../../firebase/clientApp";
 import ModalWrapper from "../ModalWrapper";
-
 type CreateCommunityModalProps = {
   isOpen: boolean;
   handleClose: () => void;
   userId: string;
 };
-
 const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
   isOpen,
   handleClose,
@@ -41,40 +39,33 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
   const [communityType, setCommunityType] = useState("public");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 21) return;
     setName(event.target.value);
     setCharsRemaining(21 - event.target.value.length);
   };
-
   const handleCreateCommunity = async () => {
     if (nameError) setNameError("");
     const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
-
     if (format.test(name) || name.length < 3) {
       return setNameError(
         "Community names must be between 3–21 characters, and can only contain letters, numbers, or underscores."
       );
     }
-
     setLoading(true);
     try {
-      // Create community document and communitySnippet subcollection document on user
       const communityDocRef = doc(firestore, "communities", name);
       await runTransaction(firestore, async (transaction) => {
         const communityDoc = await transaction.get(communityDocRef);
         if (communityDoc.exists()) {
           throw new Error(`Sorry, /r${name} is taken. Try another.`);
         }
-
         transaction.set(communityDocRef, {
           creatorId: userId,
           createdAt: serverTimestamp(),
           numberOfMembers: 1,
           privacyType: "public",
         });
-
         transaction.set(
           doc(firestore, `users/${userId}/communitySnippets`, name),
           {
@@ -105,7 +96,6 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
     if (name === communityType) return;
     setCommunityType(name);
   };
-
   return (
     <ModalWrapper isOpen={isOpen} onClose={handleClose}>
       <ModalHeader
