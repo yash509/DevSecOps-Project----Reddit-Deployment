@@ -15,7 +15,6 @@ import {
   IoArrowDownCircleOutline,
   IoArrowUpCircleOutline,
 } from "react-icons/io5";
-
 export type Comment = {
   id?: string;
   creatorId: string;
@@ -27,37 +26,18 @@ export type Comment = {
   text: string;
   createdAt?: Timestamp;
 };
-
 type CommentItemProps = {
   comment: Comment;
   onDeleteComment: (comment: Comment) => void;
   isLoading: boolean;
   userId?: string;
 };
-
 const CommentItem: React.FC<CommentItemProps> = ({
   comment,
   onDeleteComment,
   isLoading,
   userId,
 }) => {
-  // const [loading, setLoading] = useState(false);
-
-  // const handleDelete = useCallback(async () => {
-  //   setLoading(true);
-  //   try {
-  //     const success = await onDeleteComment(comment);
-
-  //     if (!success) {
-  //       throw new Error("Error deleting comment");
-  //     }
-  //   } catch (error: any) {
-  //     console.log(error.message);
-  //     // setError
-  //     setLoading(false);
-  //   }
-  // }, [setLoading]);
-
   return (
     <Flex>
       <Box mr={2}>
