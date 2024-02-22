@@ -1,6 +1,5 @@
 import React from "react";
 import { Stack, Input, Textarea, Flex, Button } from "@chakra-ui/react";
-
 type TextInputsProps = {
   textInputs: {
     title: string;
@@ -12,7 +11,6 @@ type TextInputsProps = {
   handleCreatePost: () => void;
   loading: boolean;
 };
-
 const TextInputs: React.FC<TextInputsProps> = ({
   textInputs,
   onChange,
