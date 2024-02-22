@@ -13,13 +13,9 @@ import RightContent from "./RightContent";
 import SearchInput from "./SearchInput";
 import router from "next/router";
 import useDirectory from "../../hooks/useDirectory";
-
 const Navbar: React.FC = () => {
   const [user] = useAuthState(auth);
-
-  // Use <Link> for initial build; implement directory logic near end
   const { onSelectMenuItem } = useDirectory();
-
   return (
     <Flex
       bg="white"
