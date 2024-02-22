@@ -1,6 +1,5 @@
 import { FormControl, Input } from "@chakra-ui/react";
 import React from "react";
-
 type InputFieldProps = {
   name: string;
   placeholder: string;
@@ -8,7 +7,6 @@ type InputFieldProps = {
   isRequired?: boolean;
   mb?: number;
 };
-
 const InputField: React.FC<InputFieldProps> = ({
   name,
   placeholder,
