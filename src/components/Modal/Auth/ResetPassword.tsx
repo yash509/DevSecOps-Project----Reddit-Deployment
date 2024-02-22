@@ -5,21 +5,17 @@ import { BsDot, BsReddit } from "react-icons/bs";
 import { authModalState, ModalView } from "../../../atoms/authModalAtom";
 import { auth } from "../../../firebase/clientApp";
 import { useSetRecoilState } from "recoil";
-
 type ResetPasswordProps = {
   toggleView: (view: ModalView) => void;
 };
-
 const ResetPassword: React.FC<ResetPasswordProps> = ({ toggleView }) => {
   const setAuthModalState = useSetRecoilState(authModalState);
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
   const [sendPasswordResetEmail, sending, error] =
     useSendPasswordResetEmail(auth);
-
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     await sendPasswordResetEmail(email);
     setSuccess(true);
   };
