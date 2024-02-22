@@ -16,14 +16,11 @@ import { FaReddit } from "react-icons/fa";
 import { Community } from "../../atoms/communitiesAtom";
 import { firestore } from "../../firebase/clientApp";
 import useCommunityData from "../../hooks/useCommunityData";
-
 type RecommendationsProps = {};
-
 const Recommendations: React.FC<RecommendationsProps> = () => {
   const [communities, setCommunities] = useState<Community[]>([]);
   const [loading, setLoading] = useState(false);
   const { communityStateValue, onJoinLeaveCommunity } = useCommunityData();
-
   const getCommunityRecommendations = async () => {
     setLoading(true);
     try {
@@ -38,18 +35,15 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
         ...doc.data(),
       })) as Community[];
       console.log("HERE ARE COMS", communities);
-
       setCommunities(communities);
     } catch (error: any) {
       console.log("getCommunityRecommendations error", error.message);
     }
     setLoading(false);
   };
-
   useEffect(() => {
     getCommunityRecommendations();
   }, []);
-
   return (
     <Flex
       direction="column"
