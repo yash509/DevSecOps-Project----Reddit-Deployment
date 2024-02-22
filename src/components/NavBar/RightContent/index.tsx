@@ -5,11 +5,9 @@ import AuthModal from "../../Modal/Auth";
 import AuthButtons from "./AuthButtons";
 import Icons from "./Icons";
 import MenuWrapper from "./ProfileMenu/MenuWrapper";
-
 type RightContentProps = {
   user: User;
 };
-
 const RightContent: React.FC<RightContentProps> = ({ user }) => {
   return (
     <>
