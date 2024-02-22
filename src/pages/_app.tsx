@@ -5,7 +5,6 @@ import { theme } from "../chakra/theme";
 import Layout from "../components/Layout";
 import "../firebase/clientApp";
 import "../styles/globals.css";
-
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
@@ -17,5 +16,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </RecoilRoot>
   );
 }
-
 export default MyApp;
