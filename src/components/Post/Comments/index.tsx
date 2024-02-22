@@ -25,13 +25,11 @@ import { Post, postState } from "../../../atoms/postsAtom";
 import { firestore } from "../../../firebase/clientApp";
 import CommentItem, { Comment } from "./CommentItem";
 import CommentInput from "./Input";
-
 type CommentsProps = {
   user?: User | null;
   selectedPost: Post;
   community: string;
 };
-
 const Comments: React.FC<CommentsProps> = ({
   user,
   selectedPost,
@@ -44,18 +42,14 @@ const Comments: React.FC<CommentsProps> = ({
   const [deleteLoading, setDeleteLoading] = useState("");
   const setAuthModalState = useSetRecoilState(authModalState);
   const setPostState = useSetRecoilState(postState);
-
   const onCreateComment = async (comment: string) => {
     if (!user) {
       setAuthModalState({ open: true, view: "login" });
       return;
     }
-
     setCommentCreateLoading(true);
     try {
       const batch = writeBatch(firestore);
-
-      // Create comment document
       const commentDocRef = doc(collection(firestore, "comments"));
       batch.set(commentDocRef, {
         postId: selectedPost.id,
@@ -67,13 +61,10 @@ const Comments: React.FC<CommentsProps> = ({
         postTitle: selectedPost.title,
         createdAt: serverTimestamp(),
       } as Comment);
-
-      // Update post numberOfComments
       batch.update(doc(firestore, "posts", selectedPost.id), {
         numberOfComments: increment(1),
       });
       await batch.commit();
-
       setComment("");
       const { id: postId, title } = selectedPost;
       setComments((prev) => [
@@ -92,8 +83,6 @@ const Comments: React.FC<CommentsProps> = ({
         } as Comment,
         ...prev,
       ]);
-
-      // Fetch posts again to update number of comments
       setPostState((prev) => ({
         ...prev,
         selectedPost: {
@@ -107,7 +96,6 @@ const Comments: React.FC<CommentsProps> = ({
     }
     setCommentCreateLoading(false);
   };
-
   const onDeleteComment = useCallback(
     async (comment: Comment) => {
       setDeleteLoading(comment.id as string);
@@ -116,13 +104,10 @@ const Comments: React.FC<CommentsProps> = ({
         const batch = writeBatch(firestore);
         const commentDocRef = doc(firestore, "comments", comment.id);
         batch.delete(commentDocRef);
-
         batch.update(doc(firestore, "posts", comment.postId), {
           numberOfComments: increment(-1),
         });
-
         await batch.commit();
-
         setPostState((prev) => ({
           ...prev,
           selectedPost: {
@@ -131,18 +116,14 @@ const Comments: React.FC<CommentsProps> = ({
           } as Post,
           postUpdateRequired: true,
         }));
-
         setComments((prev) => prev.filter((item) => item.id !== comment.id));
-        // return true;
       } catch (error: any) {
         console.log("Error deletig comment", error.message);
-        // return false;
       }
       setDeleteLoading("");
     },
     [setComments, setPostState]
   );
-
   const getPostComments = async () => {
     try {
       const commentsQuery = query(
@@ -161,13 +142,10 @@ const Comments: React.FC<CommentsProps> = ({
     }
     setCommentFetchLoading(false);
   };
-
   useEffect(() => {
     console.log("HERE IS SELECTED POST", selectedPost.id);
-
     getPostComments();
   }, []);
-
   return (
     <Box bg="white" p={2} borderRadius="0px 0px 4px 4px">
       <Flex
