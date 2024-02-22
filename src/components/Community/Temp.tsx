@@ -8,12 +8,10 @@ import { IoImageOutline } from "react-icons/io5";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../atoms/authModalAtom";
 import { auth } from "../../firebase/clientApp";
-
 const CreatePostLink: React.FC = () => {
   const router = useRouter();
   const [user] = useAuthState(auth);
   const setAuthModalState = useSetRecoilState(authModalState);
-
   const onClick = () => {
     if (!user) {
       setAuthModalState({ open: true, view: "login" });
@@ -22,7 +20,6 @@ const CreatePostLink: React.FC = () => {
     const { communityId } = router.query;
     router.push(`/r/${communityId}/submit`);
   };
-
   return (
     <Flex
       justify="space-evenly"
