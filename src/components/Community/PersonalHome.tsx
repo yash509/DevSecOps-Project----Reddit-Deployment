@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
 import { FaReddit } from "react-icons/fa";
-
 const PersonalHome: React.FC = () => {
   return (
     <Flex
