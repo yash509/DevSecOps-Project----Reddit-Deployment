@@ -1,5 +1,4 @@
 import React from "react";
-
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -17,13 +16,10 @@ import { auth } from "../../../../firebase/clientApp";
 
 import NoUserList from "./NoUserList";
 import UserList from "./UserList";
-
 import { FaRedditSquare } from "react-icons/fa";
 import { VscAccount } from "react-icons/vsc";
 import { IoSparkles } from "react-icons/io5";
-
 type MenuWrapperProps = {};
-
 const MenuWrapper: React.FC<MenuWrapperProps> = () => {
   const [authModal, setModalState] = useRecoilState(authModalState);
   const [user] = useAuthState(auth);
