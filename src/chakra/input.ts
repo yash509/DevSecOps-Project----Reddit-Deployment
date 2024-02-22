@@ -1,5 +1,4 @@
 import type { ComponentStyleConfig } from "@chakra-ui/theme";
-
 export const Input: ComponentStyleConfig = {
   baseStyle: {
     field: {
