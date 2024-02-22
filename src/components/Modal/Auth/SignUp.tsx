@@ -5,11 +5,9 @@ import { ModalView } from "../../../atoms/authModalAtom";
 import { auth } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
 import InputItem from "../../Layout/InputItem";
-
 type SignUpProps = {
   toggleView: (view: ModalView) => void;
 };
-
 const SignUp: React.FC<SignUpProps> = ({ toggleView }) => {
   const [form, setForm] = useState({
     email: "",
@@ -19,22 +17,17 @@ const SignUp: React.FC<SignUpProps> = ({ toggleView }) => {
   const [formError, setFormError] = useState("");
   const [createUserWithEmailAndPassword, _, loading, authError] =
     useCreateUserWithEmailAndPassword(auth);
-
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (formError) setFormError("");
     if (!form.email.includes("@")) {
       return setFormError("Please enter a valid email");
     }
-
     if (form.password !== form.confirmPassword) {
       return setFormError("Passwords do not match");
     }
-
-    // Valid form inputs
     createUserWithEmailAndPassword(form.email, form.password);
   };
-
   const onChange = ({
     target: { name, value },
   }: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +36,6 @@ const SignUp: React.FC<SignUpProps> = ({ toggleView }) => {
       [name]: value,
     }));
   };
-
   return (
     <form onSubmit={onSubmit}>
       <InputItem
