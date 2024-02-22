@@ -39,29 +39,19 @@ const Home: NextPage = () => {
     setLoading,
   } = usePosts();
   const communityStateValue = useRecoilValue(communityState);
-
   const getUserHomePosts = async () => {
     console.log("GETTING USER FEED");
     setLoading(true);
     try {
-      /**
-       * if snippets has no length (i.e. user not in any communities yet)
-       * do query for 20 posts ordered by voteStatus
-       */
       const feedPosts: Post[] = [];
-
-      // User has joined communities
       if (communityStateValue.mySnippets.length) {
         console.log("GETTING POSTS IN USER COMMUNITIES");
-
         const myCommunityIds = communityStateValue.mySnippets.map(
           (snippet) => snippet.communityId
         );
-        // Getting 2 posts from 3 communities that user has joined
         let postPromises: Array<Promise<QuerySnapshot<DocumentData>>> = [];
         [0, 1, 2].forEach((index) => {
           if (!myCommunityIds[index]) return;
-
           postPromises.push(
             getDocs(
               query(
@@ -73,10 +63,6 @@ const Home: NextPage = () => {
           );
         });
         const queryResults = await Promise.all(postPromises);
-        /**
-         * queryResults is an array of length 3, each with 0-2 posts from
-         * 3 communities that the user has joined
-         */
         queryResults.forEach((result) => {
           const posts = result.docs.map((doc) => ({
             id: doc.id,
@@ -85,10 +71,8 @@ const Home: NextPage = () => {
           feedPosts.push(...posts);
         });
       }
-      // User has not joined any communities yet
       else {
         console.log("USER HAS NO COMMUNITIES - GETTING GENERAL POSTS");
-
         const postQuery = query(
           collection(firestore, "posts"),
           orderBy("voteStatus", "desc"),
@@ -101,22 +85,16 @@ const Home: NextPage = () => {
         })) as Post[];
         feedPosts.push(...posts);
       }
-
       console.log("HERE ARE FEED POSTS", feedPosts);
-
       setPostStateValue((prev) => ({
         ...prev,
         posts: feedPosts,
       }));
-
-      // if not in any, get 5 communities ordered by number of members
-      // for each one, get 2 posts ordered by voteStatus and set these to postState posts
     } catch (error: any) {
       console.log("getUserHomePosts error", error.message);
     }
     setLoading(false);
   };
-
   const getNoUserHomePosts = async () => {
     console.log("GETTING NO USER FEED");
     setLoading(true);
@@ -132,7 +110,6 @@ const Home: NextPage = () => {
         ...doc.data(),
       }));
       console.log("NO USER FEED", posts);
-
       setPostStateValue((prev) => ({
         ...prev,
         posts: posts as Post[],
@@ -142,7 +119,6 @@ const Home: NextPage = () => {
     }
     setLoading(false);
   };
-
   const getUserPostVotes = async () => {
     const postIds = postStateValue.posts.map((post) => post.id);
     const postVotesQuery = query(
@@ -154,40 +130,27 @@ const Home: NextPage = () => {
         id: postVote.id,
         ...postVote.data(),
       }));
-
       setPostStateValue((prev) => ({
         ...prev,
         postVotes: postVotes as PostVote[],
       }));
     });
-
     return () => unsubscribe();
   };
-
   useEffect(() => {
-    /**
-     * initSnippetsFetched ensures that user snippets have been retrieved;
-     * the value is set to true when snippets are first retrieved inside
-     * of getSnippets in useCommunityData
-     */
     if (!communityStateValue.initSnippetsFetched) return;
-
     if (user) {
       getUserHomePosts();
     }
   }, [user, communityStateValue.initSnippetsFetched]);
-
   useEffect(() => {
     if (!user && !loadingUser) {
       getNoUserHomePosts();
     }
   }, [user, loadingUser]);
-
   useEffect(() => {
     if (!user?.uid || !postStateValue.posts.length) return;
     getUserPostVotes();
-
-    // Clear postVotes on dismount
     return () => {
       setPostStateValue((prev) => ({
         ...prev,
@@ -195,7 +158,6 @@ const Home: NextPage = () => {
       }));
     };
   }, [postStateValue.posts, user?.uid]);
-
   return (
     <PageContentLayout>
       <>
