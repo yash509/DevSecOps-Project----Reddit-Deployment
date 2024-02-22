@@ -4,12 +4,10 @@ import { FaReddit } from "react-icons/fa";
 import { GrAdd } from "react-icons/gr";
 import MenuListItem from "./MenuListItem";
 import { CommunitySnippet } from "../../../atoms/communitiesAtom";
-
 type MyCommunitiesProps = {
   snippets: CommunitySnippet[];
   setOpen: (value: boolean) => void;
 };
-
 const MyCommunities: React.FC<MyCommunitiesProps> = ({ snippets, setOpen }) => {
   return (
     <Box mt={3} mb={3}>
