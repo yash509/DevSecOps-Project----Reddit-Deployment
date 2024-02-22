@@ -10,12 +10,10 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-
 type ModalWrapperProps = {
   isOpen: boolean;
   onClose: () => void;
 };
-
 const ModalWrapper: React.FC<ModalWrapperProps> = ({
   children,
   isOpen,
