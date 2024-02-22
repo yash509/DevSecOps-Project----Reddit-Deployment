@@ -31,7 +31,6 @@ type AboutProps = {
   onCreatePage?: boolean;
   loading?: boolean;
 };
-
 const About: React.FC<AboutProps> = ({
   communityData,
   pt,
@@ -42,26 +41,19 @@ const About: React.FC<AboutProps> = ({
   const router = useRouter();
   const selectFileRef = useRef<HTMLInputElement>(null);
   const setCommunityStateValue = useSetRecoilState(communityState);
-
-  // April 24 - moved this logic to custom hook in tutorial build (useSelectFile)
   const [selectedFile, setSelectedFile] = useState<string>();
-
-  // Added last!
   const [imageLoading, setImageLoading] = useState(false);
-
   const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     if (event.target.files?.[0]) {
       reader.readAsDataURL(event.target.files[0]);
     }
-
     reader.onload = (readerEvent) => {
       if (readerEvent.target?.result) {
         setSelectedFile(readerEvent.target?.result as string);
       }
     };
   };
-
   const updateImage = async () => {
     if (!selectedFile) return;
     setImageLoading(true);
@@ -73,8 +65,6 @@ const About: React.FC<AboutProps> = ({
         imageURL: downloadURL,
       });
       console.log("HERE IS DOWNLOAD URL", downloadURL);
-
-      // April 24 - added state update
       setCommunityStateValue((prev) => ({
         ...prev,
         currentCommunity: {
@@ -85,12 +75,8 @@ const About: React.FC<AboutProps> = ({
     } catch (error: any) {
       console.log("updateImage error", error.message);
     }
-    // April 24 - removed reload
-    // window.location.reload();
-
     setImageLoading(false);
   };
-
   return (
     <Box pt={pt} position="sticky" top="14px">
       <Flex
