@@ -26,7 +26,6 @@ import { auth, firestore } from "../firebase/clientApp";
 import usePosts from "../hooks/usePosts";
 import Premium from "../components/Community/Premium";
 import PersonalHome from "../components/Community/PersonalHome";
-
 const Home: NextPage = () => {
   const [user, loadingUser] = useAuthState(auth);
   const {
@@ -194,5 +193,4 @@ const Home: NextPage = () => {
     </PageContentLayout>
   );
 };
-
 export default Home;
