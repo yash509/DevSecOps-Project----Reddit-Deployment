@@ -3,11 +3,9 @@ import { Box, Text } from "@chakra-ui/react";
 import { FaReddit } from "react-icons/fa";
 import { CommunitySnippet } from "../../../atoms/communitiesAtom";
 import MenuListItem from "./MenuListItem";
-
 type ModeratingProps = {
   snippets: CommunitySnippet[];
 };
-
 const Moderating: React.FC<ModeratingProps> = ({ snippets }) => {
   return (
     <Box mt={3} mb={3}>
